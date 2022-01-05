@@ -6,7 +6,9 @@
 
   <% if enhanced_cart.empty? %>
 
-  <h1>Your cart is empty.</h1>
+    <div class="alert alert-danger" role="alert">
+      <strong>Your cart is empty.</strong>
+    </div>
 
   <% else %>
 
@@ -55,5 +57,5 @@
     </div>
   </div>
  <% end %>
- 
+
 </section>
