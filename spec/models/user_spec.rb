@@ -62,8 +62,31 @@ RSpec.describe User, type: :model do
       subject.password = "passwor"
       subject.password_confirmation = "passwor"
       expect(subject).to_not be_valid
-      expect(subject.errors.full_messages).to include "Password is too short (minimum is 8 characters)"
+      expect(subject.errors.full_messages).to include "Password confirmation is too short (minimum is 8 characters)"
     end
-    
+
   end
+
+  describe '.authenticate_with_credentials' do
+
+    it 'is valid with the correct attributes' do
+      subject.save!
+      auth = User.authenticate_with_credentials(subject.email, subject.password)
+      expect(auth).to eq subject
+    end
+
+    it 'is not valid with a non existing email' do
+      subject.save!
+      auth = User.authenticate_with_credentials("test01@mail.com", subject.password)
+      expect(auth).to eq nil
+    end
+
+    it 'is not valid with incorrect password' do
+      subject.save!
+      auth = User.authenticate_with_credentials(subject.email, "drowssap")
+      expect(auth).to eq nil
+    end
+
+  end
+
 end
