@@ -87,6 +87,18 @@ RSpec.describe User, type: :model do
       expect(auth).to eq nil
     end
 
+    it 'is valid with an email with spaces around' do
+      subject.save!
+      auth = User.authenticate_with_credentials("  " + subject.email + " ", subject.password)
+      expect(auth).to eq subject
+    end
+
+    it 'is valid with an email with different cases' do
+      subject.save!
+      auth = User.authenticate_with_credentials("TesT@TesT.Com", subject.password)
+      expect(auth).to eq subject
+    end
+
   end
 
 end
