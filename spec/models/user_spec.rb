@@ -58,5 +58,12 @@ RSpec.describe User, type: :model do
       expect(subject.errors.full_messages).to include ("Email has already been taken")
     end
 
+    it "is not valid when a password less than 8 characters" do
+      subject.password = "passwor"
+      subject.password_confirmation = "passwor"
+      expect(subject).to_not be_valid
+      expect(subject.errors.full_messages).to include "Password is too short (minimum is 8 characters)"
+    end
+    
   end
 end
