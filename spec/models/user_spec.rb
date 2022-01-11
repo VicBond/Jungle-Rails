@@ -47,5 +47,16 @@ RSpec.describe User, type: :model do
       expect(subject.errors.full_messages.first).to include "Password confirmation doesn't match Password"
     end 
 
+    it "is invalid if email is already taken: case sensitive" do
+      same_as_subject = User.create(
+        name: "test01",
+        email: "Test@test.com", 
+        password: "password", 
+        password_confirmation: "password"
+      )
+      expect(subject).to_not be_valid
+      expect(subject.errors.full_messages).to include ("Email has already been taken")
+    end
+
   end
 end
